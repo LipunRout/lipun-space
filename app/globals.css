@@ -46,7 +46,7 @@ body::after {
   background-size: 25% 100%;
   mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 70%, transparent);
 }
-.hero-photo { width: min(84vw, 48svh); }
+.hero-photo { width: min(100vw, 62svh); }
 @media (min-width: 768px) { .hero-photo { width: min(36vw, 58svh); } }
 .portrait { aspect-ratio: 928 / 1152; width: 100%;
   mask-image: radial-gradient(66% 70% at 50% 40%, #000 55%, transparent 100%);

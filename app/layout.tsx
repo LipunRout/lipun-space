@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: site.title,
     description: site.description,
-    images: [{ url: '/lipun.jpg', width: 1100, height: 1366, alt: 'Lipun Rout' }],
+    images: [{ url: '/lipun.jpeg', width: 1100, height: 1366, alt: 'Lipun Rout' }],
   },
-  twitter: { card: 'summary_large_image', title: site.title, description: site.description, images: ['/lipun.jpg'] },
+  twitter: { card: 'summary_large_image', title: site.title, description: site.description, images: ['/lipun.jpeg'] },
   robots: { index: true, follow: true },
 };
 

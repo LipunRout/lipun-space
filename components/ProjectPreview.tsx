@@ -70,21 +70,21 @@ export default function ProjectPreview({ project, priority = false }: { project:
   return (
     <div className="relative" style={{ perspective: '1400px' }} onPointerMove={onMove} onPointerLeave={onLeave}>
       <div
-        className="absolute -inset-6 -z-10 rounded-[40px] opacity-60 blur-3xl"
+        className="absolute -inset-3 -z-10 hidden rounded-[40px] opacity-60 blur-3xl md:-inset-6 md:block"
         style={{ background: `radial-gradient(closest-side, ${project.accent}55, transparent)` }}
         aria-hidden
       />
       <div
         ref={tilt}
         data-clip
-        className="preview-frame overflow-hidden rounded-[14px] border border-line bg-surface will-change-transform"
+        className="preview-frame overflow-hidden rounded-xl border border-line bg-surface will-change-transform md:rounded-[14px]"
         style={{ transition: 'transform 0.25s ease-out' }}
       >
-        <div className="flex h-9 items-center gap-2 border-b border-line bg-bg2 px-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-signal/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="ml-3 truncate rounded-full bg-white/[0.05] px-3 py-1 font-mono text-[11px] text-mute">{host}</span>
+        <div className="flex h-8 items-center gap-1.5 border-b border-line bg-bg2 px-3 md:h-9 md:gap-2">
+          <span className="h-2 w-2 rounded-full bg-signal/70 md:h-2.5 md:w-2.5" />
+          <span className="h-2 w-2 rounded-full bg-white/15 md:h-2.5 md:w-2.5" />
+          <span className="h-2 w-2 rounded-full bg-white/15 md:h-2.5 md:w-2.5" />
+          <span className="ml-2 truncate rounded-full bg-white/[0.05] px-3 py-0.5 font-mono text-[10px] text-mute md:ml-3 md:py-1 md:text-[11px]">{host}</span>
         </div>
         <div className="relative aspect-[16/10] overflow-hidden">
           <div data-parallax className="preview-img absolute -inset-y-[6%] inset-x-0">

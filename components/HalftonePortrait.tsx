@@ -8,13 +8,10 @@ interface Tile {
   rnd: number; dir: number; start: number; // scroll-dissolve params
 }
 
-const TILE = 4; // CSS px per dust particle while dissolving
+const TILE_MIN = 1.5; // smaller = finer dust
+const MAX_TILES = 90000; // perf cap
+const EASE = 0.2; // 0.05 = floaty, 0.3 = snappy
 
-/**
- * Raw portrait on a canvas. At rest it is the plain, sharp photo.
- * Scrolling dissolves it in place into drifting dust (edges break first), then it is gone.
- * The wrapper is fixed, so it vanishes where it stands. Motion off: plain photo, no dissolve.
- */
 export default function HalftonePortrait({ src, label }: { src: string; label: string }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,16 +27,19 @@ export default function HalftonePortrait({ src, label }: { src: string; label: s
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0;
     let H = 0;
+    let tile = TILE_MIN;
     let tiles: Tile[] = [];
     let tileSrc = 0;
     let raf = 0;
     let cancelled = false;
     let ro: ResizeObserver | undefined;
+    let cur = 0; // eased progress actually rendered
+    let target = 0; // raw scroll progress
 
     const img = new Image();
     img.src = src;
 
-    const scrollP = () => Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.85)));
+    const scrollP = () => Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.45)));
 
     const build = () => {
       W = box.clientWidth;
@@ -49,9 +49,12 @@ export default function HalftonePortrait({ src, label }: { src: string; label: s
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const cols = Math.ceil(W / TILE);
-      const rows = Math.ceil(H / TILE);
-      tileSrc = img.naturalWidth / (W / TILE);
+      tile = TILE_MIN;
+      while ((W / tile) * (H / tile) > MAX_TILES) tile += 0.25;
+
+      const cols = Math.ceil(W / tile);
+      const rows = Math.ceil(H / tile);
+      tileSrc = img.naturalWidth / (W / tile);
       const off = document.createElement('canvas');
       off.width = cols;
       off.height = rows;
@@ -65,9 +68,9 @@ export default function HalftonePortrait({ src, label }: { src: string; label: s
         for (let c = 0; c < cols; c++) {
           const i = (r * cols + c) * 4;
           const lum = (0.299 * (data[i] ?? 0) + 0.587 * (data[i + 1] ?? 0) + 0.114 * (data[i + 2] ?? 0)) / 255;
-          if (lum < 0.035) continue; // pure background: nothing to draw
-          const x = c * TILE;
-          const y = r * TILE;
+          if (lum < 0.035) continue;
+          const x = c * tile;
+          const y = r * tile;
           const edge = Math.min(1, Math.hypot((x - W / 2) / (W / 2), (y - H * 0.4) / (H * 0.5)));
           tiles.push({
             x, y,
@@ -75,51 +78,58 @@ export default function HalftonePortrait({ src, label }: { src: string; label: s
             sy: r * tileSrc,
             rnd: Math.random(),
             dir: (Math.random() - 0.5) * 2,
-            start: Math.min(0.6, (1 - edge) * 0.35 + Math.random() * 0.12),
+            start: Math.min(0.2, (1 - edge) * 0.12 + Math.random() * 0.08),
           });
         }
       }
     };
 
-    const render = () => {
-      const p = motion ? scrollP() : 0;
+    const render = (p: number) => {
       ctx.clearRect(0, 0, W, H);
       if (p >= 1) return;
       if (p === 0) {
-        ctx.drawImage(img, 0, 0, W, H); // plain sharp photo
+        ctx.drawImage(img, 0, 0, W, H);
         return;
       }
       for (const d of tiles) {
         const q = Math.min(1, Math.max(0, (p - d.start) / (1 - d.start)));
         const e = q * q * (3 - 2 * q);
         const a = 1 - e ** 1.2;
-        const size = TILE * Math.max(0, 1 - e * 0.8);
-        if (a < 0.03 || size < 0.4) continue;
-        const px = d.x + d.dir * e * W * 0.5 + Math.sin(d.y * 0.045) * e * 26 + (TILE - size) / 2;
-        const py = d.y + (0.25 + d.rnd) * e * e * H * 0.3 + Math.cos(d.x * 0.05) * e * 10 + (TILE - size) / 2;
+        const size = tile * Math.max(0, 1 - e * 1.15);
+        if (a < 0.03 || size < 0.2) continue;
+        const px = d.x + d.dir * e * W * 0.5 + Math.sin(d.y * 0.045) * e * 26 + (tile - size) / 2;
+        const py = d.y + (0.25 + d.rnd) * e * e * H * 0.3 + Math.cos(d.x * 0.05) * e * 10 + (tile - size) / 2;
         ctx.globalAlpha = a;
-        ctx.drawImage(img, d.sx, d.sy, tileSrc, tileSrc, px, py, size + 0.4, size + 0.4);
+        ctx.drawImage(img, d.sx, d.sy, tileSrc, tileSrc, px, py, size + 0.2, size + 0.2);
       }
       ctx.globalAlpha = 1;
     };
 
+    // chase the scroll target every frame until settled
+    const tick = () => {
+      raf = 0;
+      const diff = target - cur;
+      cur = Math.abs(diff) < 0.0005 ? target : cur + diff * EASE;
+      render(cur);
+      if (cur !== target) raf = requestAnimationFrame(tick);
+    };
+
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        render();
-      });
+      target = scrollP();
+      if (!raf) raf = requestAnimationFrame(tick);
     };
 
     img.onload = () => {
       if (cancelled) return;
       build();
-      render();
+      target = motion ? scrollP() : 0;
+      cur = target; // no animation on first paint / reload mid-scroll
+      render(cur);
       if (motion) window.addEventListener('scroll', onScroll, { passive: true });
       let timer: ReturnType<typeof setTimeout>;
       ro = new ResizeObserver(() => {
         clearTimeout(timer);
-        timer = setTimeout(() => { build(); render(); }, 150);
+        timer = setTimeout(() => { build(); render(cur); }, 150);
       });
       ro.observe(box);
     };
