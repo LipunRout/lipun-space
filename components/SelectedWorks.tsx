@@ -10,7 +10,7 @@ export default function SelectedWorks() {
             <p className="font-mono text-xs text-cyan">SELECTED WORKS · 2023—2026</p>
             <h2 id="work-title" data-rl className="mt-5 font-display text-[clamp(3rem,9vw,8.5rem)] font-medium leading-[0.92] tracking-tight">
               <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">Ideas into</span></span>
-              <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">digital reality.</span></span>
+              <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">digital <em className="italic">reality.</em></span></span>
             </h2>
           </div>
           <div className="md:text-right">

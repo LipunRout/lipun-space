@@ -12,7 +12,7 @@ export default function Journey() {
         <p className="font-mono text-xs text-cyan">THE DEVELOPER JOURNEY</p>
         <h2 id="journey-title" data-rl className="mt-5 font-display text-[clamp(2.6rem,7vw,6.5rem)] font-medium leading-[0.95] tracking-tight">
           <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">Learning by</span></span>
-          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">shipping.</span></span>
+          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block"><em className="italic">shipping.</em></span></span>
         </h2>
 
         <ol className="relative mt-16 grid gap-10 md:mt-24 lg:grid-cols-4 lg:gap-8">

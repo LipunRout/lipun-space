@@ -17,7 +17,7 @@ const config: Config = {
         line: 'rgba(244,247,251,0.09)',
       },
       fontFamily: {
-        display: ['"Space Grotesk Variable"', 'system-ui', 'sans-serif'],
+        display: ['"Instrument Serif"', 'Georgia', 'serif'],
         sans: ['"Inter Variable"', 'system-ui', 'sans-serif'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],

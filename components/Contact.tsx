@@ -14,7 +14,7 @@ export default function Contact() {
         <h2 id="contact-title" data-rl className="mt-6 font-display text-[clamp(3rem,10.5vw,10rem)] font-semibold leading-[0.9] tracking-[-0.035em]">
           <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">Let&rsquo;s build</span></span>
           <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">something</span></span>
-          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">extraordinary.</span></span>
+          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block"><em className="italic">extraordinary.</em></span></span>
         </h2>
 
         <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-12">

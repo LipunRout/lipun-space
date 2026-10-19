@@ -12,7 +12,7 @@ export default function TechLab() {
       <div className="mx-auto max-w-[1400px]">
         <p className="font-mono text-xs text-cyan">THE TECHNOLOGY LAB</p>
         <h2 id="tech-title" data-rl className="mt-5 font-display text-[clamp(2.6rem,7vw,6.5rem)] font-medium leading-[0.95] tracking-tight">
-          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">What I build with.</span></span>
+          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">What I build <em className="italic">with.</em></span></span>
         </h2>
         <div data-stagger className="mt-16 grid gap-x-10 gap-y-12 md:mt-20 md:grid-cols-2 lg:grid-cols-5">
           {groups.map((g) => (

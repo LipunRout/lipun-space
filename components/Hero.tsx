@@ -14,7 +14,7 @@ export default function Hero() {
       <div className="pointer-events-none fixed inset-x-0 top-[78px] -z-10 flex justify-center md:top-[92px]">
         <div className="hero-photo">
           <div className="hero-photo-inner portrait relative">
-            <HalftonePortrait src="/lipun.jpg" label="Animated halftone portrait of Lipun Rout" />
+            <HalftonePortrait src="/lipun.jpg" label="Portrait of Lipun Rout" />
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export default function Expertise() {
         <p className="font-mono text-xs text-cyan">THE SYSTEMS I BUILD</p>
         <h2 id="exp-title" data-rl className="mt-5 font-display text-[clamp(2.6rem,7vw,6.5rem)] font-medium leading-[0.95] tracking-tight">
           <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">Four ways I</span></span>
-          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">turn ideas into software.</span></span>
+          <span className="rl block overflow-hidden pb-[0.08em]"><span className="block">turn ideas into <em className="italic">software.</em></span></span>
         </h2>
 
         <ul className="mt-16 md:mt-24">

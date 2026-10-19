@@ -8,9 +8,9 @@ export default function Intro() {
       <Marquee items={['Full-Stack', 'AI Integration', 'APIs', 'Authentication', 'Databases', 'Freelance']} />
       <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 md:py-44">
         <h2 id="about-title" data-scrub className="max-w-[16ch] font-display text-[clamp(2.8rem,8vw,7.5rem)] font-medium leading-[0.95] tracking-tight">
-          {statement.split(' ').map((w, i) => (
+          {statement.split(' ').map((w, i, arr) => (
             <span key={i}>
-              <span className="w">{w}</span>{' '}
+              <span className={i >= arr.length - 2 ? 'w italic' : 'w'}>{w}</span>{' '}
             </span>
           ))}
         </h2>

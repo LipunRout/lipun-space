@@ -52,7 +52,12 @@ body::after {
   mask-image: radial-gradient(66% 70% at 50% 40%, #000 55%, transparent 100%);
   -webkit-mask-image: radial-gradient(66% 70% at 50% 40%, #000 55%, transparent 100%); }
 .portrait-soft { opacity: 0.12; filter: grayscale(0.3) contrast(1.1); }
-.portrait-dots { opacity: 1; mix-blend-mode: screen; }
+.portrait-dots { opacity: 1; }
+
+/* Typography: Instrument Serif (display) + Inter (body) + IBM Plex Mono (labels).
+   Instrument Serif ships one weight, so never synthesize bold. */
+.font-display, .font-serif { font-weight: 400 !important; font-synthesis: none; }
+.rl { padding-right: 0.14em; margin-right: -0.14em; } /* keep italic overhang from clipping */
 
 /* buttons */
 .btn-primary {
