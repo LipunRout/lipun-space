@@ -1,50 +1,48 @@
+import type { CSSProperties } from 'react';
 import { projects } from '@/lib/projects';
+import FlowArt, { FlowSection } from './FlowArt';
 import ProjectCard from './ProjectCard';
+
+const introStyle: CSSProperties = {
+  background: 'radial-gradient(80% 60% at 85% 0%, rgba(0,229,255,0.12), transparent 60%), radial-gradient(60% 50% at 0% 100%, rgba(255,36,79,0.08), transparent 60%), #030406',
+};
 
 export default function SelectedWorks() {
   return (
-    <section id="work" aria-labelledby="work-title" className="relative scroll-mt-16 px-5 py-20 md:px-10 md:py-40">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end md:gap-8">
-          <div>
-            <p className="font-mono text-[11px] text-cyan md:text-xs">SELECTED WORKS · 2023—2026</p>
-            <h2 id="work-title" data-rl className="mt-4 font-display text-[clamp(2.4rem,11vw,8.5rem)] font-medium leading-[0.95] tracking-tight md:mt-5 md:leading-[0.92]">
-              <span className="rl block overflow-hidden pb-[0.1em]"><span className="block">Ideas into</span></span>
-              <span className="rl block overflow-hidden pb-[0.1em]"><span className="block">digital <em className="italic">reality.</em></span></span>
-            </h2>
+    <section id="work" aria-labelledby="work-title" className="relative scroll-mt-0">
+      <FlowArt aria-label="Selected works">
+        <FlowSection aria-label="Selected works introduction" style={introStyle}>
+          <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] tracking-[0.14em] md:text-xs">
+            <span className="text-cyan">SELECTED WORKS · 2023—2026</span>
+            <span className="text-mute">{String(projects.length).padStart(2, '0')} FEATURED PROJECTS</span>
           </div>
-          <div className="flex items-baseline gap-3 md:block md:text-right">
-            <p className="font-display text-4xl font-light leading-none tracking-tight md:text-6xl">05</p>
-            <p className="font-mono text-xs text-mute md:mt-2">Featured Projects</p>
+          <hr className="border-0 border-t border-white/15" />
+
+          <h2 id="work-title" className="font-display text-[clamp(3.4rem,11.5vw,12.5rem)] leading-[0.88] tracking-[-0.03em]">
+            Ideas into
+            <br />
+            <em className="italic">digital reality.</em>
+          </h2>
+
+          <hr className="border-0 border-t border-white/15" />
+          <div className="mt-auto grid gap-8 md:grid-cols-12 md:items-end">
+            <p className="max-w-[52ch] text-base leading-relaxed text-mute md:col-span-6 md:text-lg">
+              From AI-powered concepts to production-ready platforms, I build digital experiences that solve real problems through thoughtful engineering and design.
+            </p>
+            <nav aria-label="Projects" className="flex flex-wrap gap-x-8 gap-y-3 md:col-span-6 md:justify-end">
+              {projects.map((p, i) => (
+                <a key={p.slug} href={`#${p.slug}`} className="link-underline font-mono text-xs text-mute transition-colors hover:text-ink">
+                  <span style={{ color: p.accent }}>{String(i + 1).padStart(2, '0')}</span>&nbsp; {p.title}
+                </a>
+              ))}
+            </nav>
           </div>
-        </div>
+        </FlowSection>
 
-        <p className="mt-6 max-w-[56ch] text-base leading-relaxed text-mute md:mt-10 md:text-lg">
-          From AI-powered concepts to production-ready platforms, I build digital experiences that solve real problems through thoughtful engineering and design.
-        </p>
-
-        {/* Phone: one swipeable row. Desktop: wraps as before. */}
-        <nav
-          aria-label="Projects"
-          className="-mx-5 mt-8 flex snap-x gap-x-6 overflow-x-auto border-y border-line px-5 [scrollbar-width:none] md:mx-0 md:mt-12 md:flex-wrap md:gap-x-8 md:gap-y-3 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
-        >
-          {projects.map((p) => (
-            <a
-              key={p.slug}
-              href={`#${p.slug}`}
-              className="link-underline inline-flex min-h-12 shrink-0 snap-start items-center whitespace-nowrap font-mono text-xs text-mute transition-colors hover:text-ink md:min-h-0 md:py-4"
-            >
-              <span style={{ color: p.accent }}>{p.number}</span>&nbsp; {p.title}
-            </a>
-          ))}
-        </nav>
-
-        <div className="mt-10 space-y-16 md:mt-24 md:space-y-0">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} flip={i % 2 === 1} priority={i === 0} />
-          ))}
-        </div>
-      </div>
+        {projects.map((p, i) => (
+          <ProjectCard key={p.slug} project={p} index={i} total={projects.length} next={projects[i + 1]?.title} priority={i === 0} />
+        ))}
+      </FlowArt>
     </section>
   );
 }

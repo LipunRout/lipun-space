@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, X } from 'lucide-react';
 import { navLinks } from '@/lib/site';
 import { useMotion } from './MotionProvider';
+import RollingText from './RollingText';
 
 const links = navLinks.filter((l) => l.href !== '#contact');
 
@@ -30,20 +31,20 @@ export default function Nav() {
       <header className="fixed inset-x-0 top-3 z-50 flex justify-center px-3 md:top-5 md:px-6">
         <nav aria-label="Primary" className="flex h-[56px] w-full max-w-[1120px] items-center justify-between rounded-[22px] border border-white/10 bg-white/[0.05] px-5 backdrop-blur-xl md:h-[68px] md:rounded-[26px] md:px-8">
           <a href="#top" className="font-serif text-[1.6rem] leading-none tracking-tight md:text-3xl" aria-label="Lipun Rout, back to top">
-            Lipun Rout
+            <RollingText text="Lipun Rout" mode="hover" />
           </a>
 
           <ul className="hidden items-center gap-9 md:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="link-underline text-sm text-ink/85 transition-colors hover:text-ink">
-                  {l.label}
+                  <RollingText text={l.label} mode="hover" />
                 </a>
               </li>
             ))}
             <li>
               <a href="#contact" className="btn-ghost inline-flex h-11 items-center gap-6 rounded-xl border border-white/15 bg-white/[0.06] px-4 text-sm">
-                Let&rsquo;s talk <ArrowUpRight size={15} aria-hidden />
+                <RollingText text="Let's talk" mode="hover" /> <ArrowUpRight size={15} aria-hidden />
               </a>
             </li>
           </ul>

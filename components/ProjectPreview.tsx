@@ -76,7 +76,6 @@ export default function ProjectPreview({ project, priority = false }: { project:
       />
       <div
         ref={tilt}
-        data-clip
         className="preview-frame overflow-hidden rounded-xl border border-line bg-surface will-change-transform md:rounded-[14px]"
         style={{ transition: 'transform 0.25s ease-out' }}
       >
@@ -87,7 +86,7 @@ export default function ProjectPreview({ project, priority = false }: { project:
           <span className="ml-2 truncate rounded-full bg-white/[0.05] px-3 py-0.5 font-mono text-[10px] text-mute md:ml-3 md:py-1 md:text-[11px]">{host}</span>
         </div>
         <div className="relative aspect-[16/10] overflow-hidden">
-          <div data-parallax className="preview-img absolute -inset-y-[6%] inset-x-0">
+          <div className="preview-img absolute inset-0">
             <Placeholder p={project} />
             {!failed && (
               // eslint-disable-next-line @next/next/no-img-element

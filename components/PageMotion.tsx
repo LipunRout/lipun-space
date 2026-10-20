@@ -14,18 +14,23 @@ import { useMotion } from './MotionProvider';
  *   [data-draw]      horizontal rule draws in
  */
 export default function PageMotion() {
-  const { motion, ready } = useMotion();
+  const { motion, ready, intro } = useMotion();
+
+  // Hero opening sequence: starts as the page loader lifts away
+  useEffect(() => {
+    if (!ready || !motion || intro) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      tl.from('.hero-photo', { opacity: 0, scale: 1.06, duration: 1.8, ease: 'power2.out' }, 0)
+        .fromTo('.hero-sweep', { xPercent: -130, opacity: 0.9 }, { xPercent: 130, opacity: 0, duration: 1.9, ease: 'power2.inOut' }, 0)
+        .from('.hero-fade', { opacity: 0, y: 14, duration: 0.8, stagger: 0.08 }, 1.5);
+    });
+    return () => ctx.revert();
+  }, [motion, ready, intro]);
 
   useEffect(() => {
     if (!ready || !motion) return;
     const ctx = gsap.context(() => {
-      // Hero opening sequence (plays immediately; nothing blocks the page)
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-      tl.from('.hero-photo', { opacity: 0, scale: 1.06, duration: 1.8, ease: 'power2.out' }, 0)
-        .fromTo('.hero-sweep', { xPercent: -130, opacity: 0.9 }, { xPercent: 130, opacity: 0, duration: 1.9, ease: 'power2.inOut' }, 0)
-        .from('.hero-line > span', { yPercent: 115, duration: 1.1, stagger: 0.12 }, 0.35)
-        .from('.hero-fade', { opacity: 0, y: 14, duration: 0.8, stagger: 0.08 }, 1.0);
-
       gsap.utils.toArray<HTMLElement>('[data-rl]').forEach((el) => {
         gsap.from(el.querySelectorAll('.rl > span'), {
           yPercent: 115,

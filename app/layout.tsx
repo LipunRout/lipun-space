@@ -7,6 +7,7 @@ import '@fontsource/ibm-plex-mono/500.css';
 import './globals.css';
 import { site } from '@/lib/site';
 import MotionProvider from '@/components/MotionProvider';
+import Loader from '@/components/Loader';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-motion="on" suppressHydrationWarning>
       <body>
         <MotionProvider>
+          <Loader />
           <a href="#about" className="skip-link">Skip to content</a>
           {children}
         </MotionProvider>

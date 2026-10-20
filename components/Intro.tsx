@@ -1,11 +1,33 @@
-import Marquee from './Marquee';
+import InfiniteRibbon from './InfiniteRibbon';
+
+const ribbonA =
+  'React • Next.js • TypeScript • JavaScript • Angular • Tailwind CSS • Java • Python • Node.js • Express.js • Spring Boot • REST APIs • ';
+const ribbonB =
+  'MongoDB • Supabase • Groq AI • Claude AI • WebSocket • gRPC • Git • GitHub • Vercel • Render • Postman • Firebase • ';
 
 const statement = "I don't just write code. I solve problems with it.";
 
 export default function Intro() {
   return (
     <section id="about" aria-labelledby="about-title" className="relative scroll-mt-16">
-      <Marquee items={['Full-Stack', 'AI Integration', 'APIs', 'Authentication', 'Databases', 'Freelance']} />
+      {/* Two crossing skill ribbons */}
+      <div className="relative flex h-44 items-center justify-center overflow-hidden border-b border-line md:h-72" aria-label="Skills">
+        <InfiniteRibbon
+          rotation={4}
+          duration={45}
+          className="absolute left-[-5%] top-1/2 -mt-6 h-12 w-[110%] border-y border-white/25 bg-black font-display text-2xl text-ink shadow-[0_10px_40px_rgba(0,0,0,0.9)] md:-mt-10 md:h-20 md:text-5xl"
+        >
+          {ribbonA}
+        </InfiniteRibbon>
+        <InfiniteRibbon
+          rotation={-4}
+          duration={50}
+          reverse
+          className="relative h-12 w-[110%] border-y border-white/25 bg-black font-display text-2xl italic text-ink shadow-[0_10px_40px_rgba(0,0,0,0.9)] md:h-20 md:text-5xl"
+        >
+          {ribbonB}
+        </InfiniteRibbon>
+      </div>
       <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 md:py-44">
         <h2 id="about-title" data-scrub className="max-w-[16ch] font-display text-[clamp(2.8rem,8vw,7.5rem)] font-medium leading-[0.95] tracking-tight">
           {statement.split(' ').map((w, i, arr) => (

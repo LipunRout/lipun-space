@@ -46,7 +46,7 @@ body::after {
   background-size: 25% 100%;
   mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 70%, transparent);
 }
-.hero-photo { width: min(100vw, 62svh); }
+.hero-photo { width: min(84vw, 48svh); }
 @media (min-width: 768px) { .hero-photo { width: min(36vw, 58svh); } }
 .portrait { aspect-ratio: 928 / 1152; width: 100%;
   mask-image: radial-gradient(66% 70% at 50% 40%, #000 55%, transparent 100%);
@@ -107,3 +107,19 @@ html[data-motion='off'] *, html[data-motion='off'] *::before, html[data-motion='
 @media (prefers-reduced-motion: reduce) {
   .marquee-row { animation: none; }
 }
+
+/* footer */
+.footer-glow { background: radial-gradient(50% 100% at 50% 0%, rgba(0,229,255,0.07), transparent 70%); }
+.footer-wordmark {
+  font-size: clamp(4.5rem, 21vw, 21rem);
+  background: linear-gradient(to bottom, rgba(244,247,251,0.28), rgba(244,247,251,0.02) 85%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: -0.06em; padding-right: 0.08em;
+}
+
+/* hide scrollbar on swipe rows */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* RollingText: hide pre-hydration so the load roll never flashes the final word first */
+.rt-hidden { visibility: hidden; }

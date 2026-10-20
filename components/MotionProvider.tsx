@@ -7,9 +7,12 @@ interface MotionState {
   /** true once the stored/system preference has been read (avoids hydration mismatch) */
   ready: boolean;
   toggle: () => void;
+  /** true while the page loader is on screen; hero animations wait for it */
+  intro: boolean;
+  finishIntro: () => void;
 }
 
-const MotionContext = createContext<MotionState>({ motion: true, ready: false, toggle: () => {} });
+const MotionContext = createContext<MotionState>({ motion: true, ready: false, toggle: () => {}, intro: false, finishIntro: () => {} });
 export const useMotion = () => useContext(MotionContext);
 
 const KEY = 'lr-motion';
@@ -17,6 +20,8 @@ const KEY = 'lr-motion';
 export default function MotionProvider({ children }: { children: React.ReactNode }) {
   const [motion, setMotion] = useState(true);
   const [ready, setReady] = useState(false);
+  const [intro, setIntro] = useState(true);
+  const finishIntro = useCallback(() => setIntro(false), []);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -43,6 +48,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
     });
   }, []);
 
-  const value = useMemo(() => ({ motion, ready, toggle }), [motion, ready, toggle]);
+  const value = useMemo(() => ({ motion, ready, toggle, intro, finishIntro }), [motion, ready, toggle, intro, finishIntro]);
   return <MotionContext.Provider value={value}>{children}</MotionContext.Provider>;
 }
