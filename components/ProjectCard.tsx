@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import type { Project } from '@/lib/projects';
-import { FlowSection } from './FlowArt';
+import { FlowSection } from './Flowart';
 import ProjectPreview from './ProjectPreview';
 import ProjectTags from './ProjectTags';
 

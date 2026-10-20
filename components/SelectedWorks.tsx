@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { projects } from '@/lib/projects';
-import FlowArt, { FlowSection } from './FlowArt';
+import FlowArt, { FlowSection } from './Flowart';
 import ProjectCard from './ProjectCard';
 
 const introStyle: CSSProperties = {
