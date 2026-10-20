@@ -1,12 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "tailwindcss";
 
 :root {
   --bg: #030406;
   --cyan: #00e5ff;
   --blue: #3478ff;
   --signal: #ff244f;
+}
+
+@theme {
+  --color-bg: #030406;
+  --color-ink: #f4f7fb;
+  --color-mute: #a1a1aa;
+
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Instrument Serif", serif;
 }
 
 html { scroll-behavior: smooth; background: var(--bg); }
