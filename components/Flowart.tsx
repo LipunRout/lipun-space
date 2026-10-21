@@ -42,9 +42,10 @@ export default function FlowArt({ children, className = '', 'aria-label': ariaLa
     const root = ref.current;
     if (!ready || !motion || !root) return;
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia(root);
+    // Phones/tablets get plain stacked panels (pinning + rotation is too heavy there)
+    mm.add('(min-width: 1024px) and (hover: hover) and (pointer: fine)', () => {
       const sections = Array.from(root.querySelectorAll<HTMLElement>('[data-flow-section]'));
-      const angle = window.innerWidth < 768 ? 16 : 30;
 
       sections.forEach((section, i) => {
         gsap.set(section, { zIndex: i + 1 });
@@ -52,7 +53,7 @@ export default function FlowArt({ children, className = '', 'aria-label': ariaLa
         if (!inner) return;
 
         if (i > 0) {
-          gsap.set(inner, { rotation: angle, transformOrigin: 'bottom left' });
+          gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
           gsap.to(inner, {
             rotation: 0,
             ease: 'none',
@@ -70,7 +71,7 @@ export default function FlowArt({ children, className = '', 'aria-label': ariaLa
           });
         }
       });
-    }, root);
+    });
 
     const refresh = () => ScrollTrigger.refresh();
     const raf = requestAnimationFrame(refresh);
@@ -78,7 +79,7 @@ export default function FlowArt({ children, className = '', 'aria-label': ariaLa
 
     return () => {
       cancelAnimationFrame(raf);
-      ctx.revert();
+      mm.revert();
     };
   }, [motion, ready]);
 

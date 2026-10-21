@@ -36,8 +36,12 @@ export default function Loader() {
     }
 
     const html = document.documentElement;
+    const unlock = () => {
+      html.style.overflow = '';
+    };
     html.style.overflow = 'hidden';
     const failsafe = setTimeout(() => {
+      unlock();
       finishIntro();
       setDone(true);
     }, 9000);
@@ -63,13 +67,16 @@ export default function Loader() {
         .addLabel('lift', 2.65)
         .call(finishIntro, [], 'lift+=0.35')
         .to(root, { clipPath: 'inset(0 0 100% 0)', duration: 1.05, ease: 'power4.inOut' }, 'lift')
-        .call(() => setDone(true));
+        .call(() => {
+          unlock();
+          setDone(true);
+        });
     }, root);
 
     return () => {
       clearTimeout(failsafe);
       ctx.revert();
-      html.style.overflow = '';
+      unlock();
     };
     // runs once when the motion preference is known
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,12 +100,12 @@ export default function Loader() {
         <span>
           LR<span className="text-signal">.</span>
         </span>
-        <span>&mdash; 2026</span>
+        <span>PORTFOLIO &mdash; 2026</span>
       </div>
 
       <div className="flex flex-1 items-center justify-center px-5">
         <p className="loader-name text-center font-serif text-[clamp(3.2rem,11.5vw,10.5rem)] leading-[0.88] tracking-[-0.03em] text-ink">
-          <RollingText text="Lipun-Space" mode="load" waitForIntro={false} italicFrom={6} delay={0.1} stagger={0.07} rolls={7} duration={1.4} className="pb-[0.08em]" />
+          <RollingText text="Lipun Rout" mode="load" waitForIntro={false} italicFrom={6} delay={0.1} stagger={0.07} rolls={7} duration={1.4} className="pb-[0.08em]" />
         </p>
       </div>
 

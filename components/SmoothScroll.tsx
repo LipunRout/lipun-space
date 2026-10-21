@@ -9,8 +9,10 @@ export default function SmoothScroll() {
   const { motion, ready } = useMotion();
 
   useEffect(() => {
-    if (!ready || !motion) return;
-    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    // Touch devices keep native scrolling (smoother, no lag, no stuck pages)
+    const mouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!ready || !motion || !mouse) return;
+    const lenis = new Lenis({ lerp: 0.12, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     const tick = (t: number) => lenis.raf(t * 1000);
     gsap.ticker.add(tick);
